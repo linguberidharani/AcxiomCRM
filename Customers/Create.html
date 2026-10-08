@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>New customer - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="app" data-module="Customers">
+
+    <main id="content">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="Index.html">Customers</a></li>
+                <li class="breadcrumb-item active" aria-current="page">New customer</li>
+            </ol>
+        </nav>
+        <div class="page-head">
+            <div>
+                <h1 id="pageTitle">New customer</h1>
+                <p class="sub">Fields marked <span class="text-danger">*</span> are required. Email and phone must not belong to another customer.</p>
+            </div>
+        </div>
+
+        <form id="customerForm" method="post" data-mode="create" novalidate>
+            <div class="form-alert d-none" role="alert"></div>
+
+            <div class="panel">
+                <div class="panel-head"><h2>Contact</h2></div>
+                <div class="panel-body">
+                    <div class="row gx-3 gy-2">
+                        <div class="col-md-6">
+                            <label class="form-label required" for="CustomerName">Customer Name</label>
+                            <input class="form-control" type="text" id="CustomerName" name="CustomerName"
+                                   data-val="true" data-val-required="Customer Name is required."
+                                   data-val-length="Customer Name cannot be longer than 100 characters." data-val-length-max="100">
+                            <span class="field-validation-valid" data-valmsg-for="CustomerName" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="CompanyName">Company Name</label>
+                            <input class="form-control" type="text" id="CompanyName" name="CompanyName"
+                                   data-val="true" data-val-length="Company Name cannot be longer than 150 characters." data-val-length-max="150">
+                            <span class="field-validation-valid" data-valmsg-for="CompanyName" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label required" for="Email">Email</label>
+                            <input class="form-control" type="email" id="Email" name="Email" placeholder="user@example.com"
+                                   data-val="true" data-val-required="Email is required." data-val-email="Enter a valid email address."
+                                   data-val-length="Email cannot be longer than 150 characters." data-val-length-max="150">
+                            <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label required" for="Phone">Phone</label>
+                            <input class="form-control" type="tel" id="Phone" name="Phone" inputmode="numeric" placeholder="10 digit mobile number"
+                                   data-val="true" data-val-required="Phone is required." data-val-phone="Enter a valid phone number.">
+                            <span class="field-validation-valid" data-valmsg-for="Phone" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-head"><h2>Address</h2></div>
+                <div class="panel-body">
+                    <div class="row gx-3 gy-2">
+                        <div class="col-12">
+                            <label class="form-label" for="Address">Address</label>
+                            <input class="form-control" type="text" id="Address" name="Address"
+                                   data-val="true" data-val-length="Address cannot be longer than 250 characters." data-val-length-max="250">
+                            <span class="field-validation-valid" data-valmsg-for="Address" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="City">City</label>
+                            <input class="form-control" type="text" id="City" name="City"
+                                   data-val="true" data-val-length="City cannot be longer than 60 characters." data-val-length-max="60">
+                            <span class="field-validation-valid" data-valmsg-for="City" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="State">State</label>
+                            <select class="form-select" id="State" name="State"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-head"><h2>Account</h2></div>
+                <div class="panel-body">
+                    <div class="row gx-3 gy-2">
+                        <div class="col-md-6">
+                            <label class="form-label required" for="Status">Status</label>
+                            <select class="form-select" id="Status" name="Status" data-val="true" data-val-required="Status is required."></select>
+                            <span class="field-validation-valid" data-valmsg-for="Status" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label required" for="AssignedTo">Assigned To</label>
+                            <select class="form-select" id="AssignedTo" name="AssignedTo" data-val="true" data-val-required="Assigned To is required."></select>
+                            <span class="field-validation-valid" data-valmsg-for="AssignedTo" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="Notes">Notes</label>
+                            <textarea class="form-control" id="Notes" name="Notes" rows="3"
+                                      data-val="true" data-val-length="Notes cannot be longer than 1000 characters." data-val-length-max="1000"></textarea>
+                            <span class="field-validation-valid" data-valmsg-for="Notes" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3 d-flex gap-2">
+                <button class="btn btn-primary" type="submit">Save customer</button>
+                <a class="btn btn-light border" href="Index.html" id="cancelLink">Cancel</a>
+            </div>
+        </form>
+    </main>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/customers.js"></script>
+</body>
+</html>

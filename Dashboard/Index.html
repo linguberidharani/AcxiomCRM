@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="app" data-module="Dashboard">
+
+    <main id="content">
+        <div class="page-head">
+            <div>
+                <h1>Dashboard</h1>
+                <p class="sub" id="scopeText"></p>
+            </div>
+            <div class="actions">
+                <div class="btn-group btn-group-sm range-buttons" role="group" aria-label="Date range">
+                    <input type="radio" class="btn-check" name="range" id="rangeAll" value="all" checked>
+                    <label class="btn btn-light border" for="rangeAll">All time</label>
+                    <input type="radio" class="btn-check" name="range" id="rangeToday" value="today">
+                    <label class="btn btn-light border" for="rangeToday">Today</label>
+                    <input type="radio" class="btn-check" name="range" id="rangeWeek" value="week">
+                    <label class="btn btn-light border" for="rangeWeek">This Week</label>
+                    <input type="radio" class="btn-check" name="range" id="rangeMonth" value="month">
+                    <label class="btn btn-light border" for="rangeMonth">This Month</label>
+                    <input type="radio" class="btn-check" name="range" id="rangeCustom" value="custom">
+                    <label class="btn btn-light border" for="rangeCustom">Custom Range</label>
+                </div>
+            </div>
+        </div>
+
+        <form class="panel mb-3 d-none" id="customRange" novalidate>
+            <div class="panel-body py-2">
+                <div class="row g-2 align-items-end">
+                    <div class="col-auto">
+                        <label class="form-label mb-0 small" for="rangeFrom">From</label>
+                        <input type="date" class="form-control form-control-sm" id="rangeFrom">
+                    </div>
+                    <div class="col-auto">
+                        <label class="form-label mb-0 small" for="rangeTo">To</label>
+                        <input type="date" class="form-control form-control-sm" id="rangeTo">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary btn-sm">Apply</button>
+                    </div>
+                    <div class="col-auto text-danger small d-none" id="rangeError">From date cannot be after To date.</div>
+                </div>
+            </div>
+        </form>
+
+        <section class="stats" id="stats" aria-label="Key figures"></section>
+
+        <div class="row g-3 mt-0">
+            <div class="col-lg-4">
+                <div class="panel h-100">
+                    <div class="panel-head"><h2>Lead Status</h2><span class="hint" id="leadHint"></span></div>
+                    <div class="panel-body">
+                        <div class="chart-box"><canvas id="leadChart" role="img" aria-label="Leads by status"></canvas></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="panel h-100">
+                    <div class="panel-head"><h2>Opportunity Pipeline</h2><span class="hint">Amount by stage</span></div>
+                    <div class="panel-body">
+                        <div class="chart-box"><canvas id="pipelineChart" role="img" aria-label="Opportunity amount by stage"></canvas></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="panel h-100">
+                    <div class="panel-head"><h2>Monthly Sales</h2><span class="hint">Won amount, last 6 months</span></div>
+                    <div class="panel-body">
+                        <div class="chart-box"><canvas id="salesChart" role="img" aria-label="Won amount per month"></canvas></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="chart-legend">
+                    <span style="--c: #2f6fad">Open</span>
+                    <span style="--c: #1f7a57">Won / Converted</span>
+                    <span style="--c: #c9741f">Lost / Unqualified</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-0">
+            <div class="col-lg-6">
+                <div class="panel h-100">
+                    <div class="panel-head">
+                        <h2>Pending Follow-Ups</h2>
+                        <span class="hint" id="followHint"></span>
+                    </div>
+                    <ul class="plain-list" id="upcomingList"></ul>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="panel h-100">
+                    <div class="panel-head">
+                        <h2>Recent Activities</h2>
+                        <a class="hint" href="../Activities/Index.html">View all</a>
+                    </div>
+                    <ul class="plain-list" id="recentList"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel mt-3 d-none" id="teamPanel">
+            <div class="panel-head"><h2>Team Performance</h2><span class="hint">Open pipeline and won amount for each owner</span></div>
+            <div id="teamGrid"></div>
+        </div>
+
+        <div class="panel mt-3 d-none" id="adminPanel">
+            <div class="panel-head"><h2>Users and Security</h2><a class="hint" href="../AuditLog/Index.html">Open audit log</a></div>
+            <div class="summary-row" id="adminStats"></div>
+        </div>
+    </main>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../lib/chart.js/dist/chart.umd.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body data-module="Account" data-public="true">
+
+    <div class="auth-page">
+        <div class="auth-side">
+            <div class="brand"><span class="brand-mark"></span>AcxiomCRM</div>
+            <h1>Customers, leads and follow-ups in one place.</h1>
+            <p>Track every lead from the first call to the closed deal, see what is due today and keep the sales pipeline up to date.</p>
+            <div class="foot">Version 1.0</div>
+        </div>
+
+        <div class="auth-form">
+            <div class="inner">
+                <h2>Sign in</h2>
+                <p class="lead-in">Use your username or email address.</p>
+
+                <form id="loginForm" method="post" novalidate>
+                    <div class="form-alert d-none" role="alert"></div>
+
+                    <div class="mb-2">
+                        <label class="form-label" for="Login">Username or email</label>
+                        <input class="form-control" type="text" id="Login" name="Login" autocomplete="username" autofocus
+                               data-val="true" data-val-required="Username or email is required."
+                               data-val-length="Username or email cannot be longer than 150 characters." data-val-length-max="150">
+                        <span class="field-validation-valid" data-valmsg-for="Login" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label" for="Password">Password</label>
+                        <div class="input-group">
+                            <input class="form-control" type="password" id="Password" name="Password" autocomplete="current-password"
+                                   data-val="true" data-val-required="Password is required.">
+                            <button class="btn btn-light border" type="button" id="showPassword" aria-label="Show password" aria-pressed="false"><i class="bi bi-eye"></i></button>
+                        </div>
+                        <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="RememberMe" name="RememberMe">
+                        <label class="form-check-label" for="RememberMe">Keep me signed in on this computer</label>
+                    </div>
+
+                    <button class="btn btn-primary w-100" type="submit">Sign in</button>
+                </form>
+
+                <p class="mt-3 mb-0">Don't have an account? <a href="Register.html">Register</a></p>
+
+                <details class="test-accounts">
+                    <summary>Test accounts</summary>
+                    <table>
+                        <tbody>
+                            <tr><td>Admin</td><td>admin</td><td>Admin@123</td><td class="text-end"><button type="button" data-login="admin" data-password="Admin@123">Use</button></td></tr>
+                            <tr><td>Manager</td><td>suresh.menon</td><td>Manager@123</td><td class="text-end"><button type="button" data-login="suresh.menon" data-password="Manager@123">Use</button></td></tr>
+                            <tr><td>Sales Executive</td><td>rohit.verma</td><td>Sales@123</td><td class="text-end"><button type="button" data-login="rohit.verma" data-password="Sales@123">Use</button></td></tr>
+                        </tbody>
+                    </table>
+                    <p class="mt-2 mb-0 text-muted">The account is locked for 15 minutes after 5 wrong passwords.
+                        <button type="button" id="resetData">Reset sample data</button></p>
+                </details>
+            </div>
+        </div>
+    </div>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/account.js"></script>
+</body>
+</html>

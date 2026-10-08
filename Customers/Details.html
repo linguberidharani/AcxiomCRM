@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Customer details - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="app" data-module="Customers">
+
+    <main id="content">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="Index.html">Customers</a></li>
+                <li class="breadcrumb-item active" aria-current="page" id="crumb">Details</li>
+            </ol>
+        </nav>
+        <div class="page-head" id="customerDetails">
+            <div>
+                <h1><span id="dName"></span> <span id="dStatus" class="ms-1 align-middle fs-6"></span></h1>
+                <p class="sub" id="dSub"></p>
+            </div>
+            <div class="actions">
+                <a class="btn btn-light border" id="followUpLink" href="#"><i class="bi bi-calendar-plus me-1"></i>Schedule follow-up</a>
+                <a class="btn btn-light border" id="opportunityLink" href="#"><i class="bi bi-briefcase me-1"></i>New opportunity</a>
+                <a class="btn btn-primary" id="editLink" href="#"><i class="bi bi-pencil me-1"></i>Edit</a>
+                <button type="button" class="btn btn-outline-danger d-none" id="deleteButton"><i class="bi bi-trash me-1"></i>Delete</button>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-4">
+                <div class="panel">
+                    <div class="panel-head"><h2>Customer</h2></div>
+                    <div class="panel-body">
+                        <dl class="detail-list">
+                            <dt>Customer Code</dt><dd id="dCode"></dd>
+                            <dt>Company</dt><dd id="dCompany"></dd>
+                            <dt>Email</dt><dd id="dEmail"></dd>
+                            <dt>Phone</dt><dd id="dPhone"></dd>
+                            <dt>Address</dt><dd id="dAddress"></dd>
+                            <dt>Assigned To</dt><dd id="dOwner"></dd>
+                            <dt>Created</dt><dd id="dCreated"></dd>
+                            <dt>Last modified</dt><dd id="dModified"></dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-head"><h2>Notes</h2></div>
+                    <div class="panel-body notes-text" id="dNotes"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="panel">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabOpps" type="button" role="tab">Opportunities <span id="nOpps" class="text-muted"></span></button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabFollow" type="button" role="tab">Follow-ups <span id="nFollow" class="text-muted"></span></button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabActs" type="button" role="tab">Activities <span id="nActs" class="text-muted"></span></button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabHistory" type="button" role="tab">History</button></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="tabOpps" role="tabpanel"></div>
+                        <div class="tab-pane" id="tabFollow" role="tabpanel"></div>
+                        <div class="tab-pane" id="tabActs" role="tabpanel"></div>
+                        <div class="tab-pane" id="tabHistory" role="tabpanel"><div class="panel-body"><ul class="timeline" id="history"></ul></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/customers.js"></script>
+</body>
+</html>

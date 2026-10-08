@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Activities - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="app" data-module="Activities">
+
+    <main id="content">
+        <div class="page-head">
+            <div>
+                <h1>Activities</h1>
+                <p class="sub">Calls, meetings, emails and tasks logged against customers and leads.</p>
+            </div>
+            <div class="actions">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" data-new="Call"><i class="bi bi-telephone me-1"></i>Log call</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">Other activity types</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><button type="button" class="dropdown-item" data-new="Meeting"><i class="bi bi-people me-2"></i>Meeting</button></li>
+                        <li><button type="button" class="dropdown-item" data-new="Email"><i class="bi bi-envelope me-2"></i>Email</button></li>
+                        <li><button type="button" class="dropdown-item" data-new="Task"><i class="bi bi-check2-square me-2"></i>Task</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <form class="filters" id="filterForm">
+                <div class="row g-2 align-items-end">
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="type">Activity Type</label>
+                        <select class="form-select form-select-sm" id="type"></select>
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="status">Status</label>
+                        <select class="form-select form-select-sm" id="status"></select>
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="from">From date</label>
+                        <input type="date" class="form-control form-control-sm" id="from">
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="to">To date</label>
+                        <input type="date" class="form-control form-control-sm" id="to">
+                    </div>
+                    <div class="col-6 col-md-3" id="ownerFilter">
+                        <label class="form-label" for="assignedTo">Assigned User</label>
+                        <select class="form-select form-select-sm" id="assignedTo"></select>
+                    </div>
+                    <div class="col-auto">
+                        <button type="reset" class="btn btn-light border btn-sm">Clear</button>
+                    </div>
+                </div>
+            </form>
+            <div id="activityGrid"></div>
+        </div>
+    </main>
+
+    <!-- add / edit activity -->
+    <div class="modal fade" id="activityModal" tabindex="-1" aria-labelledby="activityTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form class="modal-content" id="activityForm" method="post" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="activityTitle">Log activity</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-alert d-none" role="alert"></div>
+                    <div class="row gx-3 gy-2">
+                        <div class="col-md-4">
+                            <label class="form-label required" for="ActivityType">Activity Type</label>
+                            <select class="form-select" id="ActivityType" name="ActivityType" data-val="true" data-val-required="Activity Type is required."></select>
+                            <span class="field-validation-valid" data-valmsg-for="ActivityType" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label required" for="Subject">Subject</label>
+                            <input class="form-control" type="text" id="Subject" name="Subject"
+                                   data-val="true" data-val-required="Subject is required."
+                                   data-val-length="Subject cannot be longer than 150 characters." data-val-length-max="150">
+                            <span class="field-validation-valid" data-valmsg-for="Subject" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label required" for="ActivityDate">Activity Date</label>
+                            <input class="form-control" type="date" id="ActivityDate" name="ActivityDate"
+                                   data-val="true" data-val-required="Activity Date is required.">
+                            <span class="field-validation-valid" data-valmsg-for="ActivityDate" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label required" for="Status">Status</label>
+                            <select class="form-select" id="Status" name="Status" data-val="true" data-val-required="Status is required."></select>
+                            <span class="field-validation-valid" data-valmsg-for="Status" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label required" for="AssignedTo">Assigned To</label>
+                            <select class="form-select" id="AssignedTo" name="AssignedTo" data-val="true" data-val-required="Assigned To is required."></select>
+                            <span class="field-validation-valid" data-valmsg-for="AssignedTo" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="Related">Customer or lead</label>
+                            <select class="form-select" id="Related" name="Related"></select>
+                            <span class="field-validation-valid" data-valmsg-for="Related" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="Description">Description</label>
+                            <textarea class="form-control" id="Description" name="Description" rows="3"
+                                      data-val="true" data-val-length="Description cannot be longer than 1000 characters." data-val-length-max="1000"></textarea>
+                            <span class="field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="activitySave">Save activity</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/activities.js"></script>
+</body>
+</html>

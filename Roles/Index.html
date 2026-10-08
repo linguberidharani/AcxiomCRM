@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Roles &amp; Permissions - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="app" data-module="Roles">
+
+    <main id="content">
+        <div class="page-head">
+            <div>
+                <h1>Roles &amp; Permissions</h1>
+                <p class="sub">AcxiomCRM has three fixed roles. A user's role is changed from the Users page.</p>
+            </div>
+            <div class="actions">
+                <a class="btn btn-light border" href="../Users/Index.html"><i class="bi bi-person-gear me-1"></i>Manage users</a>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-head"><h2>Roles</h2></div>
+            <div id="roleList"></div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-head"><h2>Permissions by module</h2><span class="hint">Team = own records and records of users reporting to the manager</span></div>
+            <div class="table-responsive">
+                <table class="table mb-0 grid-table matrix">
+                    <thead>
+                        <tr><th scope="col">Module</th><th scope="col">Admin</th><th scope="col">Manager</th><th scope="col">Sales Executive</th></tr>
+                    </thead>
+                    <tbody id="matrixBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/users.js"></script>
+</body>
+</html>

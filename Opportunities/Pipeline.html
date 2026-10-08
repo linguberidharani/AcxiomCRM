@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sales Pipeline - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="app" data-module="Opportunities" data-nav="Pipeline">
+
+    <main id="content">
+        <div class="page-head">
+            <div>
+                <h1>Sales Pipeline</h1>
+                <p class="sub" id="pipelineTotals"></p>
+            </div>
+            <div class="actions align-items-center">
+                <div id="ownerFilter">
+                    <label class="visually-hidden" for="boardOwner">Assigned To</label>
+                    <select class="form-select form-select-sm" id="boardOwner"></select>
+                </div>
+                <a class="btn btn-light border btn-sm" href="Index.html"><i class="bi bi-list-ul me-1"></i>List view</a>
+                <a class="btn btn-primary btn-sm" href="Create.html"><i class="bi bi-plus-lg me-1"></i>New opportunity</a>
+            </div>
+        </div>
+
+        <p class="text-muted small mb-2">Drag a card to another stage, or use the stage box on the card. Won and Lost show deals closed in the last 90 days.</p>
+        <div class="board" id="board"></div>
+    </main>
+
+    <!-- mark as won / lost -->
+    <div class="modal fade" id="closeModal" tabindex="-1" aria-labelledby="closeTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" id="closeForm" method="post" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="closeTitle">Mark as Won</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-alert d-none" role="alert"></div>
+                    <p id="closeText"></p>
+                    <label class="form-label" for="Outcome" id="outcomeLabel">Outcome</label>
+                    <textarea class="form-control" id="Outcome" name="Outcome" rows="3"
+                              data-val="true" data-val-length="Outcome cannot be longer than 1000 characters." data-val-length-max="1000"></textarea>
+                    <span class="field-validation-valid" data-valmsg-for="Outcome" data-valmsg-replace="true"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success" id="closeSubmit">Mark as Won</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/opportunities.js"></script>
+</body>
+</html>

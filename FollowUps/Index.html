@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Follow-Ups - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="app" data-module="FollowUps">
+
+    <main id="content">
+        <div class="page-head">
+            <div>
+                <h1>Follow-Ups</h1>
+                <p class="sub" id="countText"></p>
+            </div>
+            <div class="actions">
+                <button type="button" class="btn btn-primary" id="newButton"><i class="bi bi-calendar-plus me-1"></i>Schedule follow-up</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <form class="filters" id="filterForm">
+                <div class="row g-2 align-items-end">
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="status">Status</label>
+                        <select class="form-select form-select-sm" id="status">
+                            <option value="Pending">Pending</option>
+                            <option value="Overdue">Overdue</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Missed">Missed</option>
+                            <option value="Cancelled">Cancelled</option>
+                            <option value="">All</option>
+                        </select>
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="from">From date</label>
+                        <input type="date" class="form-control form-control-sm" id="from">
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="to">To date</label>
+                        <input type="date" class="form-control form-control-sm" id="to">
+                    </div>
+                    <div class="col-6 col-md-2" id="ownerFilter">
+                        <label class="form-label" for="assignedTo">Assigned User</label>
+                        <select class="form-select form-select-sm" id="assignedTo"></select>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label class="form-label" for="q">Customer, lead or subject</label>
+                        <input type="search" class="form-control form-control-sm" id="q" placeholder="Search">
+                    </div>
+                    <div class="col-auto">
+                        <button type="reset" class="btn btn-light border btn-sm">Clear</button>
+                    </div>
+                </div>
+            </form>
+            <div id="followGrid"></div>
+        </div>
+    </main>
+
+    <!-- schedule follow-up -->
+    <div class="modal fade" id="followModal" tabindex="-1" aria-labelledby="followTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form class="modal-content" id="followForm" method="post" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="followTitle">Schedule follow-up</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-alert d-none" role="alert"></div>
+                    <div class="row gx-3 gy-2">
+                        <div class="col-md-4">
+                            <label class="form-label required" for="RelatedType">Follow-up for</label>
+                            <select class="form-select" id="RelatedType" name="RelatedType" data-val="true" data-val-required="Select what this follow-up is for.">
+                                <option>Customer</option>
+                                <option>Lead</option>
+                                <option>Opportunity</option>
+                            </select>
+                            <span class="field-validation-valid" data-valmsg-for="RelatedType" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label required" for="RelatedId" id="relatedLabel">Customer</label>
+                            <select class="form-select" id="RelatedId" name="RelatedId" data-val="true" data-val-required="Select a record."></select>
+                            <span class="field-validation-valid" data-valmsg-for="RelatedId" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label required" for="Subject">Subject</label>
+                            <input class="form-control" type="text" id="Subject" name="Subject"
+                                   data-val="true" data-val-required="Subject is required."
+                                   data-val-length="Subject cannot be longer than 150 characters." data-val-length-max="150">
+                            <span class="field-validation-valid" data-valmsg-for="Subject" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label required" for="FollowUpType">Type</label>
+                            <select class="form-select" id="FollowUpType" name="FollowUpType" data-val="true" data-val-required="Follow-up Type is required."></select>
+                            <span class="field-validation-valid" data-valmsg-for="FollowUpType" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label required" for="FollowUpDate">Follow-up Date</label>
+                            <input class="form-control" type="date" id="FollowUpDate" name="FollowUpDate"
+                                   data-val="true" data-val-required="Follow-up Date is required."
+                                   data-val-notpast="Follow-up date cannot be earlier than today.">
+                            <span class="field-validation-valid" data-valmsg-for="FollowUpDate" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label required" for="AssignedTo">Assigned To</label>
+                            <select class="form-select" id="AssignedTo" name="AssignedTo" data-val="true" data-val-required="Assigned To is required."></select>
+                            <span class="field-validation-valid" data-valmsg-for="AssignedTo" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="Remarks">Remarks</label>
+                            <textarea class="form-control" id="Remarks" name="Remarks" rows="2"
+                                      data-val="true" data-val-length="Remarks cannot be longer than 1000 characters." data-val-length-max="1000"></textarea>
+                            <span class="field-validation-valid" data-valmsg-for="Remarks" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Schedule follow-up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- complete follow-up -->
+    <div class="modal fade" id="completeModal" tabindex="-1" aria-labelledby="completeTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" id="completeForm" method="post" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="completeTitle">Complete follow-up</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-alert d-none" role="alert"></div>
+                    <p id="completeText"></p>
+                    <div class="mb-2">
+                        <label class="form-label required" for="Outcome">Outcome</label>
+                        <textarea class="form-control" id="Outcome" name="Outcome" rows="3" placeholder="What was discussed or agreed"
+                                  data-val="true" data-val-required="Outcome is required."
+                                  data-val-length="Outcome cannot be longer than 1000 characters." data-val-length-max="1000"></textarea>
+                        <span class="field-validation-valid" data-valmsg-for="Outcome" data-valmsg-replace="true"></span>
+                    </div>
+                    <div>
+                        <label class="form-label" for="NextDate">Next follow-up date</label>
+                        <input class="form-control" type="date" id="NextDate" name="NextDate"
+                               data-val="true" data-val-notpast="Follow-up date cannot be earlier than today.">
+                        <span class="field-validation-valid" data-valmsg-for="NextDate" data-valmsg-replace="true"></span>
+                        <div class="form-text">Leave blank if no further follow-up is needed.</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Complete follow-up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- reschedule follow-up -->
+    <div class="modal fade" id="rescheduleModal" tabindex="-1" aria-labelledby="rescheduleTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" id="rescheduleForm" method="post" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rescheduleTitle">Reschedule follow-up</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-alert d-none" role="alert"></div>
+                    <p id="rescheduleText"></p>
+                    <div class="mb-2">
+                        <label class="form-label required" for="NewDate">New Date</label>
+                        <input class="form-control" type="date" id="NewDate" name="FollowUpDate"
+                               data-val="true" data-val-required="New Date is required."
+                               data-val-notpast="Follow-up date cannot be earlier than today.">
+                        <span class="field-validation-valid" data-valmsg-for="FollowUpDate" data-valmsg-replace="true"></span>
+                    </div>
+                    <div>
+                        <label class="form-label" for="Reason">Reason</label>
+                        <input class="form-control" type="text" id="Reason" name="Reason"
+                               data-val="true" data-val-length="Reason cannot be longer than 250 characters." data-val-length-max="250">
+                        <span class="field-validation-valid" data-valmsg-for="Reason" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Reschedule</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/followups.js"></script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lead details - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="app" data-module="Leads">
+
+    <main id="content">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="Index.html">Leads</a></li>
+                <li class="breadcrumb-item active" aria-current="page" id="crumb">Details</li>
+            </ol>
+        </nav>
+        <div class="page-head" id="leadDetails">
+            <div>
+                <h1><span id="dName"></span> <span id="dStatus" class="ms-1 align-middle fs-6"></span></h1>
+                <p class="sub" id="dSub"></p>
+            </div>
+            <div class="actions">
+                <a class="btn btn-light border" id="followUpLink" href="#"><i class="bi bi-calendar-plus me-1"></i>Schedule follow-up</a>
+                <a class="btn btn-light border" id="editLink" href="#"><i class="bi bi-pencil me-1"></i>Edit</a>
+                <button type="button" class="btn btn-success d-none" id="convertButton"><i class="bi bi-arrow-left-right me-1"></i>Convert lead</button>
+                <button type="button" class="btn btn-outline-danger d-none" id="deleteButton"><i class="bi bi-trash me-1"></i>Delete</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-body">
+                <ol class="steps" id="steps" aria-label="Lead status"></ol>
+                <div class="d-flex flex-wrap align-items-center gap-2 mt-3 pt-3 border-top" id="nextBox">
+                    <span class="text-muted" id="nextText"></span>
+                    <span id="nextButtons" class="d-flex flex-wrap gap-2"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-0">
+            <div class="col-lg-4">
+                <div class="panel">
+                    <div class="panel-head"><h2>Lead</h2></div>
+                    <div class="panel-body">
+                        <dl class="detail-list">
+                            <dt>Lead Code</dt><dd id="dCode"></dd>
+                            <dt>Company</dt><dd id="dCompany"></dd>
+                            <dt>Email</dt><dd id="dEmail"></dd>
+                            <dt>Phone</dt><dd id="dPhone"></dd>
+                            <dt>Source</dt><dd id="dSource"></dd>
+                            <dt>Priority</dt><dd id="dPriority"></dd>
+                            <dt>Expected Value</dt><dd id="dValue"></dd>
+                            <dt>Assigned To</dt><dd id="dOwner"></dd>
+                            <dt>Created</dt><dd id="dCreated"></dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-head"><h2>Notes</h2></div>
+                    <div class="panel-body notes-text" id="dNotes"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="panel">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabFollow" type="button" role="tab">Follow-ups <span id="nFollow" class="text-muted"></span></button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabActs" type="button" role="tab">Activities <span id="nActs" class="text-muted"></span></button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabHistory" type="button" role="tab">History</button></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="tabFollow" role="tabpanel"></div>
+                        <div class="tab-pane" id="tabActs" role="tabpanel"></div>
+                        <div class="tab-pane" id="tabHistory" role="tabpanel"><div class="panel-body"><ul class="timeline" id="history"></ul></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- convert lead -->
+    <div class="modal fade" id="convertModal" tabindex="-1" aria-labelledby="convertTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" id="convertForm" method="post" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="convertTitle">Convert lead</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-alert d-none" role="alert"></div>
+                    <p id="convertText"></p>
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="CreateOpportunity" name="CreateOpportunity" checked>
+                        <label class="form-check-label" for="CreateOpportunity">Create an opportunity for this customer</label>
+                    </div>
+
+                    <div id="oppFields">
+                        <div class="mb-2">
+                            <label class="form-label required" for="OpportunityName">Opportunity Name</label>
+                            <input class="form-control" type="text" id="OpportunityName" name="OpportunityName"
+                                   data-val="true" data-val-required="Opportunity Name is required."
+                                   data-val-length="Opportunity Name cannot be longer than 150 characters." data-val-length-max="150">
+                            <span class="field-validation-valid" data-valmsg-for="OpportunityName" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="row gx-3 gy-2">
+                            <div class="col-sm-6">
+                                <label class="form-label required" for="Amount">Amount (&#8377;)</label>
+                                <input class="form-control" type="number" id="Amount" name="Amount" inputmode="decimal"
+                                       data-val="true" data-val-required="Opportunity Amount is required." data-val-number="Opportunity Amount must be a number."
+                                       data-val-positive="Opportunity Amount must be greater than 0.">
+                                <span class="field-validation-valid" data-valmsg-for="Amount" data-valmsg-replace="true"></span>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label required" for="Probability">Probability (%)</label>
+                                <input class="form-control" type="number" id="Probability" name="Probability" inputmode="numeric"
+                                       data-val="true" data-val-required="Probability is required."
+                                       data-val-range="Probability must be between 0 and 100." data-val-range-min="0" data-val-range-max="100">
+                                <span class="field-validation-valid" data-valmsg-for="Probability" data-valmsg-replace="true"></span>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label required" for="ExpectedCloseDate">Expected Close Date</label>
+                                <input class="form-control" type="date" id="ExpectedCloseDate" name="ExpectedCloseDate"
+                                       data-val="true" data-val-required="Expected Close Date is required."
+                                       data-val-notpast="Expected Close Date cannot be in the past.">
+                                <span class="field-validation-valid" data-valmsg-for="ExpectedCloseDate" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Convert lead</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/leads.js"></script>
+</body>
+</html>

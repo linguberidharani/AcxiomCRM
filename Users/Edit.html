@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit user - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="app" data-module="UserAdmin" data-nav="Users">
+
+    <main id="content">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="Index.html">Users</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit user</li>
+            </ol>
+        </nav>
+        <div class="page-head">
+            <div>
+                <h1 id="pageTitle">Edit user</h1>
+                <p class="sub">Each user has exactly one role.</p>
+            </div>
+        </div>
+
+        <form id="userForm" method="post" data-mode="edit" novalidate>
+            <div class="form-alert d-none" role="alert"></div>
+
+            <div class="panel">
+                <div class="panel-head"><h2>User</h2></div>
+                <div class="panel-body">
+                    <div class="row gx-3 gy-2">
+                        <div class="col-md-6">
+                            <label class="form-label required" for="FullName">Full Name</label>
+                            <input class="form-control" type="text" id="FullName" name="FullName"
+                                   data-val="true" data-val-required="Full Name is required."
+                                   data-val-length="Full Name cannot be longer than 100 characters." data-val-length-max="100">
+                            <span class="field-validation-valid" data-valmsg-for="FullName" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label required" for="UserName">Username</label>
+                            <input class="form-control" type="text" id="UserName" name="UserName" autocomplete="off"
+                                   data-val="true" data-val-required="Username is required."
+                                   data-val-username="Username must be 4 to 30 characters: letters, numbers, dot or underscore.">
+                            <span class="field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label required" for="Email">Email</label>
+                            <input class="form-control" type="email" id="Email" name="Email" placeholder="user@example.com"
+                                   data-val="true" data-val-required="Email is required." data-val-email="Enter a valid email address."
+                                   data-val-length="Email cannot be longer than 150 characters." data-val-length-max="150">
+                            <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label required" for="Phone">Phone</label>
+                            <input class="form-control" type="tel" id="Phone" name="Phone" inputmode="numeric" placeholder="10 digit mobile number"
+                                   data-val="true" data-val-required="Phone is required." data-val-phone="Enter a valid phone number.">
+                            <span class="field-validation-valid" data-valmsg-for="Phone" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-head"><h2>Role and access</h2></div>
+                <div class="panel-body">
+                    <div class="row gx-3 gy-2">
+                        <div class="col-md-6">
+                            <label class="form-label required" for="Role">Role</label>
+                            <select class="form-select" id="Role" name="Role" data-val="true" data-val-required="Role is required."></select>
+                            <span class="field-validation-valid" data-valmsg-for="Role" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="ManagerId">Reports to</label>
+                            <select class="form-select" id="ManagerId" name="ManagerId"></select>
+                            <span class="field-validation-valid" data-valmsg-for="ManagerId" data-valmsg-replace="true"></span>
+                            <div class="form-text">Only for Sales Executives. The manager sees this user's records.</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="IsActive" name="IsActive" checked>
+                                <label class="form-check-label" for="IsActive">Active (can sign in)</label>
+                            </div>
+                            <span class="field-validation-valid" data-valmsg-for="IsActive" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel" id="passwordPanel">
+                <div class="panel-head"><h2>Password</h2></div>
+                <div class="panel-body">
+                    <div class="row gx-3 gy-2">
+                        <div class="col-md-6">
+                            <label class="form-label required" for="Password">Password</label>
+                            <input class="form-control" type="password" id="Password" name="Password" autocomplete="new-password"
+                                   data-val="true" data-val-required="Password is required."
+                                   data-val-passwordpolicy="Password does not meet the password policy.">
+                            <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label required" for="ConfirmPassword">Confirm Password</label>
+                            <input class="form-control" type="password" id="ConfirmPassword" name="ConfirmPassword" autocomplete="new-password"
+                                   data-val="true" data-val-required="Confirm Password is required."
+                                   data-val-equalto="Password and confirmation do not match." data-val-equalto-other="*.Password">
+                            <span class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-12">
+                            <ul class="password-rules" id="passwordRules"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3 d-flex gap-2">
+                <button class="btn btn-primary" type="submit">Save changes</button>
+                <a class="btn btn-light border" href="Index.html">Cancel</a>
+            </div>
+        </form>
+    </main>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/users.js"></script>
+</body>
+</html>

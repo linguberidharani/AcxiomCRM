@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Audit Log - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="app" data-module="AuditLog">
+
+    <main id="content">
+        <div class="page-head">
+            <div>
+                <h1>Audit Log</h1>
+                <p class="sub" id="scopeText"></p>
+            </div>
+            <div class="actions">
+                <button type="button" class="btn btn-light border" id="exportButton"><i class="bi bi-download me-1"></i>Export CSV</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <form class="filters" id="filterForm">
+                <div class="row g-2 align-items-end">
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="userId">User</label>
+                        <select class="form-select form-select-sm" id="userId"></select>
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="entity">Module</label>
+                        <select class="form-select form-select-sm" id="entity"></select>
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="action">Action</label>
+                        <select class="form-select form-select-sm" id="action"></select>
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="from">From date</label>
+                        <input type="date" class="form-control form-control-sm" id="from">
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="to">To date</label>
+                        <input type="date" class="form-control form-control-sm" id="to">
+                    </div>
+                    <div class="col-auto">
+                        <button type="reset" class="btn btn-light border btn-sm">Clear</button>
+                    </div>
+                </div>
+            </form>
+            <div id="auditGrid"></div>
+        </div>
+    </main>
+
+    <!-- audit record -->
+    <div class="modal fade" id="auditModal" tabindex="-1" aria-labelledby="auditTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="auditTitle">Audit record</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <dl class="detail-list mb-3">
+                        <dt>Date and time</dt><dd id="aWhen"></dd>
+                        <dt>User</dt><dd id="aUser"></dd>
+                        <dt>Action</dt><dd id="aAction"></dd>
+                        <dt>Module</dt><dd id="aEntity"></dd>
+                        <dt>Record ID</dt><dd id="aRecord"></dd>
+                        <dt>Result</dt><dd id="aResult"></dd>
+                        <dt>IP address</dt><dd id="aIp"></dd>
+                        <dt>Details</dt><dd id="aDetails"></dd>
+                    </dl>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-label">Old value</div>
+                            <pre class="audit-values" id="aOld"></pre>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-label">New value</div>
+                            <pre class="audit-values" id="aNew"></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/auditlog.js"></script>
+</body>
+</html>

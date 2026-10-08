@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reports - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="app" data-module="Reports">
+
+    <main id="content">
+        <div class="page-head">
+            <div>
+                <h1>Reports</h1>
+                <p class="sub" id="scopeText"></p>
+            </div>
+            <div class="actions">
+                <button type="button" class="btn btn-light border" id="printButton"><i class="bi bi-printer me-1"></i>Print</button>
+                <button type="button" class="btn btn-light border" id="exportButton"><i class="bi bi-download me-1"></i>Export CSV</button>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-3">
+                <div class="panel report-nav">
+                    <div class="list-group list-group-flush" id="reportList"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="panel">
+                    <div class="panel-head">
+                        <h2 id="reportTitle"></h2>
+                        <span class="hint" id="reportAbout"></span>
+                    </div>
+                    <form class="filters" id="filterForm">
+                        <div class="row g-2 align-items-end">
+                            <div class="col-6 col-md-3" data-filter="date">
+                                <label class="form-label" for="from"><span class="date-label">Date</span> from</label>
+                                <input type="date" class="form-control form-control-sm" id="from">
+                            </div>
+                            <div class="col-6 col-md-3" data-filter="date">
+                                <label class="form-label" for="to"><span class="date-label">Date</span> to</label>
+                                <input type="date" class="form-control form-control-sm" id="to">
+                            </div>
+                            <div class="col-6 col-md-3" data-filter="owner">
+                                <label class="form-label" for="owner">Owner</label>
+                                <select class="form-select form-select-sm" id="owner"></select>
+                            </div>
+                            <div class="col-6 col-md-2" data-filter="status">
+                                <label class="form-label" for="status" id="statusLabel">Status</label>
+                                <select class="form-select form-select-sm" id="status"></select>
+                            </div>
+                            <div class="col-6 col-md-3" data-filter="group">
+                                <label class="form-label" for="group">Group by</label>
+                                <select class="form-select form-select-sm" id="group">
+                                    <option value="stage">Stage</option>
+                                    <option value="owner">Owner</option>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <button type="reset" class="btn btn-light border btn-sm">Clear</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="summary-row" id="summary"></div>
+                    <div id="reportGrid"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/reports.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Customers - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="app" data-module="Customers">
+
+    <main id="content">
+        <div class="page-head">
+            <div>
+                <h1>Customers</h1>
+                <p class="sub" id="scopeText"></p>
+            </div>
+            <div class="actions">
+                <a class="btn btn-primary" href="Create.html"><i class="bi bi-plus-lg me-1"></i>New customer</a>
+            </div>
+        </div>
+
+        <div class="panel">
+            <form class="filters" id="filterForm">
+                <div class="row g-2 align-items-end">
+                    <div class="col-md-5">
+                        <label class="form-label" for="q">Search</label>
+                        <input type="search" class="form-control form-control-sm" id="q" placeholder="Customer name, email, phone or company">
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="status">Status</label>
+                        <select class="form-select form-select-sm" id="status"></select>
+                    </div>
+                    <div class="col-6 col-md-3" id="ownerFilter">
+                        <label class="form-label" for="assignedTo">Assigned To</label>
+                        <select class="form-select form-select-sm" id="assignedTo"></select>
+                    </div>
+                    <div class="col-auto">
+                        <button type="reset" class="btn btn-light border btn-sm">Clear</button>
+                    </div>
+                </div>
+            </form>
+            <div id="customerGrid"></div>
+        </div>
+    </main>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/customers.js"></script>
+</body>
+</html>

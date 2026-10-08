@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Opportunity details - AcxiomCRM</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="app" data-module="Opportunities">
+
+    <main id="content">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="Index.html">Opportunities</a></li>
+                <li class="breadcrumb-item active" aria-current="page" id="crumb">Details</li>
+            </ol>
+        </nav>
+        <div class="page-head" id="oppDetails">
+            <div>
+                <h1><span id="dName"></span> <span id="dStage" class="ms-1 align-middle fs-6"></span></h1>
+                <p class="sub" id="dSub"></p>
+            </div>
+            <div class="actions">
+                <a class="btn btn-light border" id="followUpLink" href="#"><i class="bi bi-calendar-plus me-1"></i>Schedule follow-up</a>
+                <a class="btn btn-light border d-none" id="editLink" href="#"><i class="bi bi-pencil me-1"></i>Edit</a>
+                <button type="button" class="btn btn-success d-none" id="wonButton"><i class="bi bi-check-lg me-1"></i>Mark as Won</button>
+                <button type="button" class="btn btn-outline-danger d-none" id="lostButton">Mark as Lost</button>
+                <button type="button" class="btn btn-outline-danger d-none" id="deleteButton" title="Delete" aria-label="Delete opportunity"><i class="bi bi-trash"></i></button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-body">
+                <ol class="steps" id="steps" aria-label="Pipeline stage"></ol>
+                <div class="d-flex flex-wrap align-items-center gap-2 mt-3 pt-3 border-top">
+                    <span class="text-muted" id="stageText"></span>
+                    <span id="stageButtons" class="d-flex flex-wrap gap-2"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-0">
+            <div class="col-lg-5">
+                <div class="panel">
+                    <div class="panel-head"><h2>Opportunity</h2><span class="hint code" id="dCode"></span></div>
+                    <div class="panel-body">
+                        <dl class="detail-list">
+                            <dt>Customer</dt><dd id="dCustomer"></dd>
+                            <dt>Amount</dt><dd id="dAmount" class="num"></dd>
+                            <dt>Probability</dt><dd id="dProbability" class="num"></dd>
+                            <dt>Weighted amount</dt><dd id="dWeighted" class="num"></dd>
+                            <dt>Expected close</dt><dd id="dClose"></dd>
+                            <dt>Status</dt><dd id="dStatus"></dd>
+                            <dt>Source</dt><dd id="dSource"></dd>
+                            <dt>Assigned To</dt><dd id="dOwner"></dd>
+                            <dt>Created</dt><dd id="dCreated"></dd>
+                            <dt>From lead</dt><dd id="dLead"></dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="panel d-none" id="outcomePanel">
+                    <div class="panel-head"><h2>Outcome</h2><span class="hint" id="dClosed"></span></div>
+                    <div class="panel-body notes-text" id="dOutcome"></div>
+                </div>
+                <div class="panel">
+                    <div class="panel-head"><h2>Notes</h2></div>
+                    <div class="panel-body notes-text" id="dNotes"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="panel">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabFollow" type="button" role="tab">Follow-ups <span id="nFollow" class="text-muted"></span></button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabHistory" type="button" role="tab">History</button></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="tabFollow" role="tabpanel"></div>
+                        <div class="tab-pane" id="tabHistory" role="tabpanel"><div class="panel-body"><ul class="timeline" id="history"></ul></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- mark as won / lost -->
+    <div class="modal fade" id="closeModal" tabindex="-1" aria-labelledby="closeTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" id="closeForm" method="post" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="closeTitle">Mark as Won</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-alert d-none" role="alert"></div>
+                    <p id="closeText"></p>
+                    <label class="form-label" for="Outcome" id="outcomeLabel">Outcome</label>
+                    <textarea class="form-control" id="Outcome" name="Outcome" rows="3"
+                              data-val="true" data-val-length="Outcome cannot be longer than 1000 characters." data-val-length-max="1000"></textarea>
+                    <span class="field-validation-valid" data-valmsg-for="Outcome" data-valmsg-replace="true"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success" id="closeSubmit">Mark as Won</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/site.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/seed.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/audit.js"></script>
+    <script src="../js/services/common.js"></script>
+    <script src="../js/services/customers.js"></script>
+    <script src="../js/services/leads.js"></script>
+    <script src="../js/services/opportunities.js"></script>
+    <script src="../js/services/followups.js"></script>
+    <script src="../js/services/activities.js"></script>
+    <script src="../js/services/users.js"></script>
+    <script src="../js/services/reports.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/pages/opportunities.js"></script>
+</body>
+</html>
